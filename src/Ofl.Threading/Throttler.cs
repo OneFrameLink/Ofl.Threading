@@ -2,7 +2,6 @@
 using System.Reactive.Concurrency;
 using System.Threading;
 using System.Threading.Tasks;
-using Nito.AsyncEx;
 using AsyncLock = Nito.AsyncEx.AsyncLock;
 
 namespace Ofl.Threading
