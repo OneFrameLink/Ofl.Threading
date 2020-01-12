@@ -27,7 +27,7 @@ namespace Ofl.Threading
 
         #endregion
 
-        #region Instance state.
+        #region State.
 
         public int MaxCount { get; }
 
@@ -51,7 +51,7 @@ namespace Ofl.Threading
 
         #region Throttle and helpers.
 
-        private Task<bool> ResetAsync(DateTimeOffset windowStart, bool result, CancellationToken cancellationToken)
+        private Task<bool> ResetAsync(DateTimeOffset windowStart, bool result)
         {
             // Set the values.
             _windowStart = windowStart;
@@ -76,7 +76,7 @@ namespace Ofl.Threading
                 // Then reset and return.
                 if (_windowStart == null || now > _windowEnd)
                     // Reset with now.
-                    return await ResetAsync(now, false, cancellationToken);
+                    return await ResetAsync(now, false);
 
                 // Increment the count.
                 _count++;
@@ -89,9 +89,9 @@ namespace Ofl.Threading
                 var tcs = new TaskCompletionSource<bool>();
 
                 // Schedule.
-                Scheduler.Schedule((object) null, _windowEnd, (s, o) => {
+                Scheduler.Schedule((object?) null, _windowEnd, (s, _) => {
                     // Reset.
-                    ResetAsync(s.Now, true, cancellationToken);
+                    ResetAsync(s.Now, true);
 
                     // Set the result.
                     tcs.TrySetResult(true);

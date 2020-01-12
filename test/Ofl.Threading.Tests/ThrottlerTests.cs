@@ -13,7 +13,13 @@ namespace Ofl.Threading.Tests
         [InlineData(3, 2, null, "00:00:01", true)]
         [InlineData(3, 2, "00:00:02", "00:00:01", false)]
         [InlineData(2600, 2500, null, "00:00:01", true)]
-        public async Task Test_Throttle(int iterations, int maxCount, string delayString, string windowString, bool expectedResult)
+        public async Task Test_Throttle(
+            int iterations, 
+            int maxCount, 
+            string? delayString, 
+            string windowString, 
+            bool expectedResult
+        )
         {
             // The cancellation token.
             CancellationToken cancellationToken = CancellationToken.None;
